@@ -69,12 +69,13 @@ class BaseConfig:
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "dev-only-insecure-secret")
+    # >= 32 bytes so HS256 does not warn; still not a production secret.
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "dev-only-insecure-secret-key-not-for-production")
 
 
 class TestingConfig(BaseConfig):
     TESTING = True
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "test-only-secret")
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "test-only-secret-key-at-least-32-bytes-long")
     DB_NAME = os.getenv("DB_NAME", "bank_test")
 
 

@@ -33,9 +33,11 @@ def register_error_handlers(app: Flask) -> None:
 
     @app.errorhandler(HTTPException)
     def _handle_http_error(exc: HTTPException):
-        # flask-smorest attaches validation detail to the exception's data.
-        errors = getattr(exc, "data", {}).get("errors") if hasattr(exc, "data") else None
-        message = getattr(exc, "description", None) or exc.name
+        # flask-smorest/webargs attach validation detail under data["messages"];
+        # some paths use data["errors"]. Surface either as the envelope's errors.
+        data = getattr(exc, "data", None) or {}
+        errors = data.get("errors") or data.get("messages")
+        message = "Validation failed" if errors else (exc.description or exc.name)
         return _envelope(exc.code or 500, message, errors)
 
     @app.errorhandler(Exception)
