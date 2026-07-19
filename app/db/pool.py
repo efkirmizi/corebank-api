@@ -61,3 +61,15 @@ def reset_pool() -> None:
     global _pool
     with _lock:
         _pool = None
+
+
+def ping() -> bool:
+    """Infrastructure liveness check for readiness probes."""
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SELECT 1")
+            cur.fetchone()
+        return True
+    finally:
+        conn.close()

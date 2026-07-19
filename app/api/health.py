@@ -4,7 +4,7 @@ from __future__ import annotations
 from flask import jsonify
 from flask_smorest import Blueprint
 
-from app.db import get_connection
+from app.db import ping
 
 blp = Blueprint("health", __name__, description="Service health checks")
 
@@ -19,13 +19,7 @@ def health():
 def ready():
     """Readiness — the database is reachable."""
     try:
-        conn = get_connection()
-        try:
-            with conn.cursor() as cur:
-                cur.execute("SELECT 1")
-                cur.fetchone()
-        finally:
-            conn.close()
+        ping()
     except Exception:
         return jsonify({"status": "unavailable", "database": "unreachable"}), 503
     return jsonify({"status": "ready", "database": "reachable"})

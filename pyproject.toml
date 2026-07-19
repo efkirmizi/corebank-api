@@ -1,0 +1,30 @@
+[project]
+name = "corebank-api"
+version = "1.0.0"
+description = "Core banking REST API — Flask, MySQL, JWT, hand-written SQL, fully containerized."
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra -q"
+markers = [
+    "integration: touches a real MySQL database",
+    "concurrency: spawns threads to exercise locking",
+]
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/logging_config.py"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+ignore = ["B008"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
