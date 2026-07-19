@@ -1,0 +1,44 @@
+# One command to a working, seeded API:
+#
+#     docker compose up
+#
+# Swagger UI: http://localhost:5000/docs
+# Demo logins: admin/admin123, alice/alice123, bob/bob123
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-devpassword}
+      MYSQL_DATABASE: ${DB_NAME:-bank}
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 20s
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: development
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD:-devpassword}
+      DB_NAME: ${DB_NAME:-bank}
+      DB_POOL_SIZE: "10"
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-dev-only-insecure-secret-key-not-for-production}
+      CORS_ORIGINS: "*"
+      # Load the demo dataset on start. Unset for an empty database.
+      SEED_DEMO_DATA: "1"
+    ports:
+      - "5000:5000"
+
+volumes:
+  dbdata:
