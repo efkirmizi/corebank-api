@@ -6,6 +6,7 @@ details come from the environment (with local defaults), so the same tests run
 in CI against a service container. The test database is dropped and rebuilt from
 migrations + seeds at the start of each session for a clean, repeatable slate.
 """
+
 from __future__ import annotations
 
 import os

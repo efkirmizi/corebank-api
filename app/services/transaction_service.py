@@ -11,6 +11,7 @@ Here the whole movement runs inside one unit of work:
   3. credit the receiver and record the ledger row;
   4. commit — or roll the entire thing back on any error.
 """
+
 from __future__ import annotations
 
 from decimal import Decimal

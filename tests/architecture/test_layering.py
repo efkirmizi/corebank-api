@@ -3,6 +3,7 @@
 If someone writes SQL in a route or imports Flask into a service, this fails in
 CI instead of rotting into the architecture over time.
 """
+
 from __future__ import annotations
 
 import re

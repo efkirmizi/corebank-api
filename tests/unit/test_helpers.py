@@ -1,4 +1,5 @@
 """Unit tests for the Flask-free service helpers."""
+
 from __future__ import annotations
 
 import pymysql

@@ -1,4 +1,5 @@
 """SQL for the customer_support table, including the top-resolvers query."""
+
 from __future__ import annotations
 
 from pymysql.connections import Connection
@@ -6,8 +7,7 @@ from pymysql.connections import Connection
 from ._base import execute, fetch_all, fetch_one
 
 COLUMNS = (
-    "ticket_id, customer_id, employee_id, issue_description, status, "
-    "created_date, resolved_date"
+    "ticket_id, customer_id, employee_id, issue_description, status, " "created_date, resolved_date"
 )
 
 

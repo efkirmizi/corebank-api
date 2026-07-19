@@ -1,4 +1,5 @@
 """Account lifecycle. Money movement lives in transaction_service."""
+
 from __future__ import annotations
 
 from decimal import Decimal

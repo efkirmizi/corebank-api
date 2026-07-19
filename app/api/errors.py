@@ -5,6 +5,7 @@
 The ``errors`` key is present only for field-level validation failures, matching
 the shape flask-smorest emits for schema validation so clients see one format.
 """
+
 from __future__ import annotations
 
 from http import HTTPStatus

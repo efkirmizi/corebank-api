@@ -1,9 +1,10 @@
 """Customer-support ticket endpoints, including the top-resolvers report."""
+
 from __future__ import annotations
 
+from flask.views import MethodView
 from flask_jwt_extended import jwt_required
 from flask_smorest import Blueprint
-from flask.views import MethodView
 from marshmallow import Schema, fields, validate
 
 from app.security import admin_required, current_user, is_admin

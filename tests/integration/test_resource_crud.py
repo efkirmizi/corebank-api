@@ -5,6 +5,7 @@ paths (create/get/update/status/delete) that the focused flow tests do not.
 Entities are created in dependency order and removed in reverse, so the database
 is left as it was found.
 """
+
 from __future__ import annotations
 
 import random
@@ -83,7 +84,9 @@ def test_full_resource_lifecycle(client, admin_headers):
             },
             "card_id",
         )
-        blocked = client.put(f"/api/v1/cards/{card_id}/status", headers=h, json={"status": "BLOCKED"})
+        blocked = client.put(
+            f"/api/v1/cards/{card_id}/status", headers=h, json={"status": "BLOCKED"}
+        )
         assert blocked.status_code == 200 and blocked.get_json()["status"] == "BLOCKED"
         assert blocked.get_json()["card_number"].startswith("************")  # masked
 
@@ -100,10 +103,12 @@ def test_full_resource_lifecycle(client, admin_headers):
             },
             "loan_id",
         )
-        status_resp = client.put(f"/api/v1/loans/{loan_id}/status", headers=h, json={"status": "PAID_OFF"})
+        status_resp = client.put(
+            f"/api/v1/loans/{loan_id}/status", headers=h, json={"status": "PAID_OFF"}
+        )
         assert status_resp.status_code == 200 and status_resp.get_json()["status"] == "PAID_OFF"
 
-        payment_id = post(
+        post(  # registered for teardown; id not needed here
             "/api/v1/loan-payments/",
             {"loan_id": loan_id, "payment_amount": "500.00", "remaining_balance": "9500.00"},
             "loan_payment_id",
@@ -117,9 +122,7 @@ def test_full_resource_lifecycle(client, admin_headers):
             {"customer_id": customer_id, "score": "700.00", "risk_category": "LOW"},
             "credit_score_id",
         )
-        upd = client.put(
-            f"/api/v1/credit-scores/{score_id}", headers=h, json={"score": "710.00"}
-        )
+        upd = client.put(f"/api/v1/credit-scores/{score_id}", headers=h, json={"score": "710.00"})
         assert upd.status_code == 200 and upd.get_json()["score"] == "710.00"
 
         # support ticket (status update exercised)

@@ -1,4 +1,5 @@
 """Branches. Admin-managed, plus the branch-conditions report."""
+
 from __future__ import annotations
 
 from app.db import read_only, unit_of_work

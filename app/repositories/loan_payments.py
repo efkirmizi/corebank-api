@@ -1,4 +1,5 @@
 """SQL for the loan_payment table."""
+
 from __future__ import annotations
 
 from pymysql.connections import Connection
@@ -39,6 +40,4 @@ def list_by_loan(conn: Connection, loan_id: str) -> list[dict]:
 
 
 def delete(conn: Connection, loan_payment_id: str) -> int:
-    return execute(
-        conn, "DELETE FROM loan_payment WHERE loan_payment_id = %s", (loan_payment_id,)
-    )
+    return execute(conn, "DELETE FROM loan_payment WHERE loan_payment_id = %s", (loan_payment_id,))

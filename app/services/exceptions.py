@@ -3,6 +3,7 @@
 Deliberately free of any Flask import: services stay testable without an app
 context, and the API layer is the only place that maps these to HTTP responses.
 """
+
 from __future__ import annotations
 
 

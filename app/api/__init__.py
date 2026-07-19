@@ -3,6 +3,7 @@
 Every resource blueprint is registered here under the ``/api/v1`` prefix. Health
 probes are mounted at the root so orchestrators can reach them without a version.
 """
+
 from __future__ import annotations
 
 from flask_smorest import Api

@@ -3,6 +3,7 @@
 Customers open tickets for themselves and read their own; admins see all, change
 status, and view the reporting query.
 """
+
 from __future__ import annotations
 
 from app.db import read_only, unit_of_work

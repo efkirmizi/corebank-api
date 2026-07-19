@@ -1,4 +1,5 @@
 """SQL for the transaction ledger, including the high-value reporting query."""
+
 from __future__ import annotations
 
 from pymysql.connections import Connection
@@ -23,9 +24,7 @@ def insert(conn: Connection, data: dict) -> None:
 
 
 def list_all(conn: Connection) -> list[dict]:
-    return fetch_all(
-        conn, f"SELECT {COLUMNS} FROM transaction ORDER BY transaction_timestamp DESC"
-    )
+    return fetch_all(conn, f"SELECT {COLUMNS} FROM transaction ORDER BY transaction_timestamp DESC")
 
 
 def get(conn: Connection, transaction_id: str) -> dict | None:

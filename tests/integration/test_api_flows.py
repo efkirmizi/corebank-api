@@ -1,4 +1,5 @@
 """End-to-end HTTP flows through the app against a real MySQL database."""
+
 from __future__ import annotations
 
 import uuid
@@ -9,7 +10,6 @@ from tests.conftest import (
     ALICE_CHECKING,
     ALICE_SAVINGS,
     BOB_CHECKING,
-    DOWNTOWN_BRANCH,
 )
 
 pytestmark = pytest.mark.integration

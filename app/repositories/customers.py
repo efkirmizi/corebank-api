@@ -1,4 +1,5 @@
 """SQL for the customer table."""
+
 from __future__ import annotations
 
 from pymysql.connections import Connection
@@ -27,9 +28,7 @@ def list_all(conn: Connection) -> list[dict]:
 
 
 def get(conn: Connection, customer_id: str) -> dict | None:
-    return fetch_one(
-        conn, f"SELECT {COLUMNS} FROM customer WHERE customer_id = %s", (customer_id,)
-    )
+    return fetch_one(conn, f"SELECT {COLUMNS} FROM customer WHERE customer_id = %s", (customer_id,))
 
 
 def update(conn: Connection, customer_id: str, fields: dict) -> int:

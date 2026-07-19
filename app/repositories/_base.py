@@ -4,9 +4,11 @@ They remove open/execute/fetch/close boilerplate while keeping every SQL string
 explicit and visible in the calling repository — the SQL is the point, so it is
 never hidden behind query-builder magic.
 """
+
 from __future__ import annotations
 
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from pymysql.connections import Connection
 

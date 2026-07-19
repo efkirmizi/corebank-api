@@ -11,10 +11,11 @@ is what makes a partial money transfer structurally impossible.
         transactions.record(conn, ...)
     # COMMIT here, or ROLLBACK if the block raised
 """
+
 from __future__ import annotations
 
+from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Iterator
 
 from pymysql.connections import Connection
 

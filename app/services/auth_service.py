@@ -6,6 +6,7 @@ deliberate absence of the old username-sanitizing regex: the query is
 parameterized, so stripping characters added no safety and silently merged
 distinct usernames (``a-b`` and ``ab``) at login.
 """
+
 from __future__ import annotations
 
 from werkzeug.security import check_password_hash

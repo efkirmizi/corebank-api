@@ -3,6 +3,7 @@
 Config is read from the environment so no secrets live in the repository.
 Production refuses to start if required secrets are missing.
 """
+
 from __future__ import annotations
 
 import os
@@ -89,8 +90,7 @@ class ProductionConfig(BaseConfig):
         ]
         if missing:
             raise RuntimeError(
-                "Refusing to start: missing required environment variables: "
-                + ", ".join(missing)
+                "Refusing to start: missing required environment variables: " + ", ".join(missing)
             )
         if cls.CORS_ORIGINS == "*":
             raise RuntimeError("Refusing to start: CORS_ORIGINS must not be '*' in production.")

@@ -3,12 +3,13 @@
 Each log line is a single JSON object, which reads cleanly in container logs and
 ships straight into log aggregators without a custom parser.
 """
+
 from __future__ import annotations
 
 import json
 import logging
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from flask import Flask, g, has_request_context, request
 
@@ -16,7 +17,7 @@ from flask import Flask, g, has_request_context, request
 class JsonFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         payload = {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "level": record.levelname,
             "logger": record.name,
             "message": record.getMessage(),

@@ -7,6 +7,7 @@ Usage:
 Applied versions are tracked in the ``schema_migrations`` table, so re-running
 is safe and idempotent. This replaces the old ``init_db()``-at-import approach.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -54,14 +55,12 @@ def ensure_database() -> str:
 
 
 def _ensure_migrations_table(cur) -> None:
-    cur.execute(
-        """
+    cur.execute("""
         CREATE TABLE IF NOT EXISTS schema_migrations (
             version VARCHAR(255) PRIMARY KEY,
             applied_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
         )
-        """
-    )
+        """)
 
 
 def _applied(cur) -> set[str]:
@@ -84,9 +83,7 @@ def run_migrations() -> int:
                 print(f"applying {version} ...")
                 for stmt in _statements(path.read_text(encoding="utf-8")):
                     cur.execute(stmt)
-                cur.execute(
-                    "INSERT INTO schema_migrations (version) VALUES (%s)", (version,)
-                )
+                cur.execute("INSERT INTO schema_migrations (version) VALUES (%s)", (version,))
                 applied_count += 1
     finally:
         conn.close()

@@ -1,4 +1,5 @@
 """Shared marshmallow field helpers."""
+
 from __future__ import annotations
 
 from marshmallow import fields

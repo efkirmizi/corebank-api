@@ -2,11 +2,12 @@
 
 All Flask-free, so services remain unit-testable without an app context.
 """
+
 from __future__ import annotations
 
 import uuid
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pymysql
 
@@ -26,7 +27,7 @@ def new_id() -> str:
 
 def utcnow() -> datetime:
     """Naive UTC timestamp suitable for a MySQL DATETIME column."""
-    return datetime.now(timezone.utc).replace(tzinfo=None)
+    return datetime.now(UTC).replace(tzinfo=None)
 
 
 def ensure_owner_or_admin(actor: dict, customer_id: str | None) -> None:
@@ -49,9 +50,7 @@ def integrity_guard():
         if errno == 1452:
             raise BadRequestError("A referenced record does not exist") from exc
         if errno == 1451:
-            raise ConflictError(
-                "Cannot delete: this record is still referenced by others"
-            ) from exc
+            raise ConflictError("Cannot delete: this record is still referenced by others") from exc
         if errno in (3819, 4025):  # CHECK constraint violated
             raise BusinessRuleError("A database constraint was violated") from exc
         raise

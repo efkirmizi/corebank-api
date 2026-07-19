@@ -1,4 +1,5 @@
 """SQL for the card table."""
+
 from __future__ import annotations
 
 from pymysql.connections import Connection

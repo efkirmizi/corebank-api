@@ -1,4 +1,5 @@
 """SQL for the employee table."""
+
 from __future__ import annotations
 
 from pymysql.connections import Connection
@@ -6,8 +7,7 @@ from pymysql.connections import Connection
 from ._base import execute, fetch_all, fetch_one
 
 COLUMNS = (
-    "employee_id, branch_id, first_name, last_name, position, hire_date, "
-    "phone_number, email"
+    "employee_id, branch_id, first_name, last_name, position, hire_date, " "phone_number, email"
 )
 
 
@@ -27,9 +27,7 @@ def list_all(conn: Connection) -> list[dict]:
 
 
 def get(conn: Connection, employee_id: str) -> dict | None:
-    return fetch_one(
-        conn, f"SELECT {COLUMNS} FROM employee WHERE employee_id = %s", (employee_id,)
-    )
+    return fetch_one(conn, f"SELECT {COLUMNS} FROM employee WHERE employee_id = %s", (employee_id,))
 
 
 def update(conn: Connection, employee_id: str, fields: dict) -> int:

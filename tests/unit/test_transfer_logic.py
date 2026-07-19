@@ -4,6 +4,7 @@ These pass because the service imports no Flask and reaches the database only
 through injectable repository functions and the unit of work. That is the
 practical payoff of the layering.
 """
+
 from __future__ import annotations
 
 import contextlib

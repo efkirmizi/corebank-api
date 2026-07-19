@@ -1,13 +1,12 @@
 """SQL for the branch table, including the branch-conditions reporting query."""
+
 from __future__ import annotations
 
 from pymysql.connections import Connection
 
 from ._base import execute, fetch_all, fetch_one
 
-COLUMNS = (
-    "branch_id, branch_name, address_line1, address_line2, city, zip_code, phone_number"
-)
+COLUMNS = "branch_id, branch_name, address_line1, address_line2, city, zip_code, phone_number"
 
 
 def insert(conn: Connection, data: dict) -> None:
@@ -31,9 +30,7 @@ def get(conn: Connection, branch_id: str) -> dict | None:
 def update(conn: Connection, branch_id: str, fields: dict) -> int:
     assignments = ", ".join(f"{col} = %({col})s" for col in fields)
     params = {**fields, "branch_id": branch_id}
-    return execute(
-        conn, f"UPDATE branch SET {assignments} WHERE branch_id = %(branch_id)s", params
-    )
+    return execute(conn, f"UPDATE branch SET {assignments} WHERE branch_id = %(branch_id)s", params)
 
 
 def delete(conn: Connection, branch_id: str) -> int:

@@ -19,6 +19,7 @@ and never lets one reach the database. Run it yourself:
 
 Requires the same DB_* environment variables as the app.
 """
+
 from __future__ import annotations
 
 import os
@@ -72,7 +73,8 @@ def naive_transfer(sender: str, receiver: str, amount: Decimal) -> None:
             )
             conn.commit()
             cur.execute(
-                "UPDATE account SET balance = balance + %s WHERE account_id = %s", (amount, receiver)
+                "UPDATE account SET balance = balance + %s WHERE account_id = %s",
+                (amount, receiver),
             )
             conn.commit()
     finally:

@@ -1,4 +1,5 @@
 """SQL for the credit_score table."""
+
 from __future__ import annotations
 
 from pymysql.connections import Connection
@@ -41,6 +42,4 @@ def update(conn: Connection, credit_score_id: str, fields: dict) -> int:
 
 
 def delete(conn: Connection, credit_score_id: str) -> int:
-    return execute(
-        conn, "DELETE FROM credit_score WHERE credit_score_id = %s", (credit_score_id,)
-    )
+    return execute(conn, "DELETE FROM credit_score WHERE credit_score_id = %s", (credit_score_id,))

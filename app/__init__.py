@@ -7,6 +7,7 @@
 Layering: api → services → repositories → db. Nothing below the api layer
 imports Flask; the factory is the only place the layers are wired together.
 """
+
 from __future__ import annotations
 
 import logging
@@ -29,9 +30,7 @@ def create_app(config_name: str | None = None) -> Flask:
 
     config = get_config(config_name)
     app.config.from_object(config)
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(
-        hours=config.JWT_ACCESS_TOKEN_EXPIRES_HOURS
-    )
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=config.JWT_ACCESS_TOKEN_EXPIRES_HOURS)
 
     configure_logging(app)
     _init_extensions(app, config)

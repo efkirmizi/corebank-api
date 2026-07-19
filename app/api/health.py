@@ -1,4 +1,5 @@
 """Liveness and readiness probes."""
+
 from __future__ import annotations
 
 from flask import jsonify

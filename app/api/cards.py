@@ -1,9 +1,10 @@
 """Card endpoints."""
+
 from __future__ import annotations
 
+from flask.views import MethodView
 from flask_jwt_extended import jwt_required
 from flask_smorest import Blueprint
-from flask.views import MethodView
 from marshmallow import Schema, fields, validate
 
 from app.security import admin_required, current_user
@@ -27,9 +28,7 @@ class CardSchema(Schema):
 class CardCreateSchema(Schema):
     account_id = fields.String(required=True)
     card_type = fields.String(required=True, validate=validate.OneOf(CARD_TYPES))
-    card_number = fields.String(
-        required=True, load_only=True, validate=validate.Length(equal=16)
-    )
+    card_number = fields.String(required=True, load_only=True, validate=validate.Length(equal=16))
     expiration_date = fields.Date(required=True)
     cvv = fields.String(required=True, load_only=True, validate=validate.Length(min=3, max=3))
     status = fields.String(load_default="ACTIVE", validate=validate.OneOf(CARD_STATUSES))

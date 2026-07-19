@@ -4,10 +4,11 @@ The access token carries the user's role and, for customer users, their
 ``customer_id``. Ownership checks therefore compare the token's customer_id to a
 resource's customer_id with no extra database round-trip.
 """
+
 from __future__ import annotations
 
+from collections.abc import Callable
 from functools import wraps
-from typing import Callable
 
 from flask_jwt_extended import get_jwt, get_jwt_identity, verify_jwt_in_request
 

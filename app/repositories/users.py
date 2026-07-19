@@ -1,4 +1,5 @@
 """SQL for the user table. Password hashes are stored, never plaintext."""
+
 from __future__ import annotations
 
 from pymysql.connections import Connection
@@ -32,17 +33,13 @@ def list_all(conn: Connection) -> list[dict]:
 
 
 def get(conn: Connection, user_id: str) -> dict | None:
-    return fetch_one(
-        conn, f"SELECT {PUBLIC_COLUMNS} FROM user WHERE user_id = %s", (user_id,)
-    )
+    return fetch_one(conn, f"SELECT {PUBLIC_COLUMNS} FROM user WHERE user_id = %s", (user_id,))
 
 
 def update(conn: Connection, user_id: str, fields: dict) -> int:
     assignments = ", ".join(f"{col} = %({col})s" for col in fields)
     params = {**fields, "user_id": user_id}
-    return execute(
-        conn, f"UPDATE user SET {assignments} WHERE user_id = %(user_id)s", params
-    )
+    return execute(conn, f"UPDATE user SET {assignments} WHERE user_id = %(user_id)s", params)
 
 
 def delete(conn: Connection, user_id: str) -> int:

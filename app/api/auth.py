@@ -1,9 +1,10 @@
 """Authentication endpoints."""
+
 from __future__ import annotations
 
+from flask.views import MethodView
 from flask_jwt_extended import create_access_token, jwt_required
 from flask_smorest import Blueprint
-from flask.views import MethodView
 from marshmallow import Schema, fields
 
 from app.security import current_user

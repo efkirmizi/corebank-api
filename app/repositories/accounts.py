@@ -4,6 +4,7 @@
 inside one unit of work. ``debit`` is guarded in SQL (``WHERE balance >= amount``)
 so an overdraft cannot slip through a check-then-act race.
 """
+
 from __future__ import annotations
 
 from decimal import Decimal
@@ -30,15 +31,11 @@ def list_all(conn: Connection) -> list[dict]:
 
 
 def get(conn: Connection, account_id: str) -> dict | None:
-    return fetch_one(
-        conn, f"SELECT {COLUMNS} FROM account WHERE account_id = %s", (account_id,)
-    )
+    return fetch_one(conn, f"SELECT {COLUMNS} FROM account WHERE account_id = %s", (account_id,))
 
 
 def list_by_customer(conn: Connection, customer_id: str) -> list[dict]:
-    return fetch_all(
-        conn, f"SELECT {COLUMNS} FROM account WHERE customer_id = %s", (customer_id,)
-    )
+    return fetch_all(conn, f"SELECT {COLUMNS} FROM account WHERE customer_id = %s", (customer_id,))
 
 
 def set_balance(conn: Connection, account_id: str, balance: Decimal) -> int:
@@ -69,8 +66,7 @@ def debit(conn: Connection, account_id: str, amount: Decimal) -> int:
     """Subtract amount only if funds suffice. Returns rows affected (0 = declined)."""
     return execute(
         conn,
-        "UPDATE account SET balance = balance - %s "
-        "WHERE account_id = %s AND balance >= %s",
+        "UPDATE account SET balance = balance - %s " "WHERE account_id = %s AND balance >= %s",
         (amount, account_id, amount),
     )
 

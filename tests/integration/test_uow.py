@@ -1,4 +1,5 @@
 """The unit of work commits on success and rolls back on any exception."""
+
 from __future__ import annotations
 
 import pytest

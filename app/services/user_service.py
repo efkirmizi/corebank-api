@@ -4,6 +4,7 @@ Passwords are hashed with werkzeug before storage and never returned. Unlike the
 original, creating a user is an admin-only operation at the API layer — the old
 endpoint was unauthenticated, so anyone could mint an ADMIN account.
 """
+
 from __future__ import annotations
 
 from werkzeug.security import generate_password_hash

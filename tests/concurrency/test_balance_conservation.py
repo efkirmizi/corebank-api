@@ -13,6 +13,7 @@ The naive check-then-act implementation lets concurrent overdrafts slip past the
 application check and reach the database, where only the CHECK constraint stops
 them — surfacing as HTTP 500s. See scripts/concurrency_demo.py for that contrast.
 """
+
 from __future__ import annotations
 
 import random

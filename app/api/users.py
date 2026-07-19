@@ -1,8 +1,9 @@
 """User (login identity) endpoints. Admin-managed."""
+
 from __future__ import annotations
 
-from flask_smorest import Blueprint
 from flask.views import MethodView
+from flask_smorest import Blueprint
 from marshmallow import Schema, fields, validate
 
 from app.security import admin_required

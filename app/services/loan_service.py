@@ -1,4 +1,5 @@
 """Loans. Customers may read their own; admins manage all."""
+
 from __future__ import annotations
 
 from app.db import read_only, unit_of_work

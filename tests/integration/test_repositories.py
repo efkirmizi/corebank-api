@@ -3,6 +3,7 @@
 These catch what fake repositories cannot: SQL typos, column drift, and the
 driver returning DECIMAL money as Decimal rather than float.
 """
+
 from __future__ import annotations
 
 import uuid

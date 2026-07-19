@@ -4,6 +4,7 @@ A single process-wide pool is created lazily from Flask config and handed out
 through :func:`get_connection`. Repositories never construct their own
 connections; they receive one from the unit of work.
 """
+
 from __future__ import annotations
 
 import threading

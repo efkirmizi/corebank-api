@@ -1,9 +1,10 @@
 """Account endpoints."""
+
 from __future__ import annotations
 
+from flask.views import MethodView
 from flask_jwt_extended import jwt_required
 from flask_smorest import Blueprint
-from flask.views import MethodView
 from marshmallow import Schema, fields, validate
 
 from app.security import admin_required, current_user
@@ -48,9 +49,7 @@ class Accounts(MethodView):
     @blp.response(201, AccountSchema)
     def post(self, data):
         """Open a new account (admin)."""
-        return account_service.create(
-            data["customer_id"], data["account_type"], data["branch_id"]
-        )
+        return account_service.create(data["customer_id"], data["account_type"], data["branch_id"])
 
 
 @blp.route("/<account_id>")

@@ -1,4 +1,5 @@
 """Authorization: role decorators and ownership checks."""
+
 from .auth import (
     admin_required,
     current_user,
