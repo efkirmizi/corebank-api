@@ -3,5 +3,8 @@
 pytest>=8,<9
 pytest-cov>=5,<7
 requests>=2.31,<3
-ruff>=0.6
-black>=24
+
+# Linters are pinned narrowly on purpose: formatting and lint rules change
+# between releases, and an unpinned bump would fail CI on untouched code.
+ruff~=0.15.22
+black~=26.5.1
