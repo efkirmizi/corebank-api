@@ -158,13 +158,19 @@ All routes move under `/api/v1`. Errors use one documented JSON envelope:
 applied versions tracked in a `schema_migrations` table. Versioned and repeatable while
 staying hand-written SQL — no ORM, no Alembic.
 
-- `001_initial_schema.sql` — the 11 tables as they exist today, unchanged.
+- `001_initial_schema.sql` — the 11 tables.
 - `002_indexes.sql` — indexes on foreign keys and on columns the analytical queries
-  filter and group by. Currently only primary and unique keys exist, so the three
-  reporting queries do full scans.
-- `003_constraints.sql` — tighten the two inconsistent `ON DELETE SET NULL` rules on
-  `NOT NULL` columns (`loan.customer_id`, `loan_payment.loan_id`), which can never fire
-  and would error if they did.
+  filter and group by. Originally only primary and unique keys existed, so the three
+  reporting queries did full scans.
+
+**Revised during implementation.** The plan called for a third migration to correct the
+two foreign keys declared `ON DELETE SET NULL` on `NOT NULL` columns
+(`loan.customer_id`, `loan_payment.loan_id`). That proved impossible to stage as a later
+migration: MySQL 8 rejects the combination at table-creation time (error 1830), so a
+faithful reproduction of the original schema cannot be created at all — the original
+`init_db()` could never have run on MySQL 8. The correction is therefore folded into
+`001` (both use `ON DELETE RESTRICT`, which is what a `NOT NULL` owning column implies)
+and documented there and in the README.
 
 **Pooling.** `DBUtils.PooledDB` over PyMySQL, configured per environment, exposed only
 through `app/db/`.
@@ -242,9 +248,8 @@ machine) and is performed at the end, after the content justifies the name.
 new commits are clean and conventional. Rewriting published history is disruptive, and
 the contrast makes the new work read better.
 
-This spec lives at `docs/superpowers/specs/` during development and moves to
-`docs/design.md` before the repository is published, so the public tree carries a design
-document without tooling-specific paths.
+This spec is published at `docs/design.md`, alongside the phased
+`docs/implementation-plan.md`, so the repository carries its own design record.
 
 ## 8. Execution order
 
